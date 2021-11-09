@@ -1,6 +1,8 @@
 require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
+const swaggerUi = require('swagger-ui-express');
+const docs = require('./docs');
 
 const app = express();
 
@@ -38,6 +40,8 @@ require('./app/routes/user.routes')(app);
 app.get("/", (req, res) => {
   res.json({ message: "Hello world" });
 });
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(docs));
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

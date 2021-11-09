@@ -14,11 +14,11 @@ exports.signup = (req, res) => {
 
   user.save((err, user) => {
     if (err) {
-      res.status(500).send({ message: err });
+      res.status(500).send({ msg: err });
       return;
     }
 
-    res.send({ message: "User was registered successfully!" });
+    res.status(201).send({ msg: "User was registered successfully!" });
   });
 };
 
@@ -27,7 +27,7 @@ exports.signin = (req, res) => {
     expiresIn: 86400 // 24 hours
   });
 
-  res.status(200).send({
+  res.status(202).send({
     id: req.currentUser._id,
     username: req.currentUser.username,
     email: req.currentUser.email,
