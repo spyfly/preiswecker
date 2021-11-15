@@ -33,5 +33,5 @@ pipelines:
               variables:
                 USER: 'debian'
                 SERVER: '185.128.119.242'
-                REMOTE_PATH: '*.tar'
-                LOCAL_PATH: '/home/debian/images'
+                REMOTE_PATH: '/home/debian/images/'
+                LOCAL_PATH: '*.tar'
