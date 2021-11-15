@@ -14,25 +14,26 @@ pipelines:
       - step:
           name: crawler - Build
           script:
+            - apt install zstd -y
             - IMAGE_NAME=crawler
             - cd crawler
             - docker build . --file Dockerfile --tag ${IMAGE_NAME}
             - cd ..
-            - docker save ${IMAGE_NAME} --output "${IMAGE_NAME}.tar"
+            - docker save ${IMAGE_NAME} | zstd > "${IMAGE_NAME}.tar.zst"
           services:
             - docker
           caches:
             - docker
           artifacts:
-            - "*.tar"
+            - "*.tar.zst"
       - step:
           name: Deploy to Production
           deployment: Production
           script:
-            - chmod +r *.tar
+            - chmod +r *.tar.zst
             - pipe: atlassian/sftp-deploy:0.5.8
               variables:
                 USER: 'debian'
                 SERVER: '185.128.119.242'
                 REMOTE_PATH: '/home/debian/images/'
-                LOCAL_PATH: '*.tar'
+                LOCAL_PATH: '*.tar.zst'
