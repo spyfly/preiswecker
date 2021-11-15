@@ -14,7 +14,7 @@ pipelines:
       - step:
           name: crawler - Build
           script:
-            - apt install zstd -y
+            - apt update && apt install zstd -y
             - IMAGE_NAME=crawler
             - cd crawler
             - docker build . --file Dockerfile --tag ${IMAGE_NAME}
