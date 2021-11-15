@@ -18,20 +18,21 @@ pipelines:
             - cd crawler
             - docker build . --file Dockerfile --tag ${IMAGE_NAME}
             - cd ..
-            - docker save ${IMAGE_NAME} | gzip > ${IMAGE_NAME}.tar.gz"
+            - docker save ${IMAGE_NAME} --output "${IMAGE_NAME}.tar"
           services:
             - docker
           caches:
             - docker
           artifacts:
-            - "*.tar.gz"
+            - "*.tar"
       - step:
           name: Deploy to Production
           deployment: Production
           script:
+            - chmod +r *.tar
             - pipe: atlassian/sftp-deploy:0.5.8
               variables:
                 USER: 'debian'
                 SERVER: '185.128.119.242'
                 REMOTE_PATH: '/home/debian/images/'
-                LOCAL_PATH: '*.tar.gz'
+                LOCAL_PATH: '*.tar'
