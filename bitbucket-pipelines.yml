@@ -35,4 +35,3 @@ pipelines:
                 SERVER: '185.128.119.242'
                 REMOTE_PATH: '*.tar'
                 LOCAL_PATH: '/home/debian/images'
-                SSH_KEY: $CLOUD_AND_HEAT_SSH_KEY # Optional.
