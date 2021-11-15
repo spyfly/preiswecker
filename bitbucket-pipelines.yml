@@ -30,10 +30,19 @@ pipelines:
           name: Deploy to Production
           deployment: Production
           script:
+            # Make Docker Images readable (not by default apparently)
             - chmod +r *.tar.zst
+            # Upload Docker Images to our VM
             - pipe: atlassian/sftp-deploy:0.5.8
               variables:
                 USER: 'debian'
                 SERVER: '185.128.119.242'
                 REMOTE_PATH: '/home/debian/images/'
                 LOCAL_PATH: '*.tar.zst'
+            # Import Docker Images into Docker on our VM
+            - pipe: atlassian/ssh-run:0.4.0
+              variables:
+                SSH_USER: 'debian'
+                SERVER: '185.128.119.242'
+                COMMAND: '/home/debian/import-images.sh'
+            
