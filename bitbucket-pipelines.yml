@@ -18,13 +18,13 @@ pipelines:
             - cd crawler
             - docker build . --file Dockerfile --tag ${IMAGE_NAME}
             - cd ..
-            - docker save ${IMAGE_NAME} --output "${IMAGE_NAME}.tar"
+            - docker save ${IMAGE_NAME} | gzip > {IMAGE_NAME}.tar.gz"
           services:
             - docker
           caches:
             - docker
           artifacts:
-            - "*.tar"
+            - "*.tar.gz"
       - step:
           name: Deploy to Production
           deployment: Production
@@ -34,4 +34,4 @@ pipelines:
                 USER: 'debian'
                 SERVER: '185.128.119.242'
                 REMOTE_PATH: '/home/debian/images/'
-                LOCAL_PATH: '*.tar'
+                LOCAL_PATH: '*.tar.gz'
