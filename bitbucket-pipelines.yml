@@ -17,6 +17,7 @@ pipelines:
             - IMAGE_NAME=crawler
             - cd crawler
             - docker build . --file Dockerfile --tag ${IMAGE_NAME}
+            - cd ~
             - docker save ${IMAGE_NAME} --output "${IMAGE_NAME}.tar"
           services:
             - docker
@@ -28,11 +29,10 @@ pipelines:
           name: Deploy to Production
           deployment: Production
           script:
-            - IMAGE_NAME=crawler
-#           - docker load --input "${IMAGE_NAME}.tar"
-#           - VERSION="prod-0.1.${BITBUCKET_BUILD_NUMBER}"
-#           - IMAGE=${DOCKERHUB_NAMESPACE}/${IMAGE_NAME}
-#           - docker tag "${IMAGE_NAME}" "${IMAGE}:${VERSION}"
-#           - docker push "${IMAGE}:${VERSION}"
-          services:
-            - docker
+            - pipe: atlassian/sftp-deploy:0.5.8
+              variables:
+                USER: 'debian'
+                SERVER: '185.128.119.242'
+                REMOTE_PATH: '*.tar'
+                LOCAL_PATH: '/home/debian/images'
+                SSH_KEY: $CLOUD_AND_HEAT_SSH_KEY # Optional.
