@@ -17,7 +17,7 @@ pipelines:
             - IMAGE_NAME=crawler
             - cd crawler
             - docker build . --file Dockerfile --tag ${IMAGE_NAME}
-            - cd ~
+            - cd ..
             - docker save ${IMAGE_NAME} --output "${IMAGE_NAME}.tar"
           services:
             - docker
