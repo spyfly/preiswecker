@@ -74,6 +74,7 @@ pipelines:
       - step:
           name: Deploy to Production
           deployment: Production
+          script:
             # Copy Docker Compose File
             - pipe: atlassian/sftp-deploy:0.5.8
               variables:
