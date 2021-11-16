@@ -28,11 +28,15 @@ pipelines:
           caches:
             - docker
           artifacts:
-            - "*.tar.zst"
+            download: false
+            paths:
+              - "*.tar.zst"
       - step:
           name: Deploy to Production
           deployment: Production
           script:
+            # Only execute if we have artifacts to deploy
+            - if [ $(find . -name "*.tar.zst" | wc -l) == 0 ]; then exit 0 ; fi
             # Make Docker Images readable (not by default apparently)
             - chmod +r *.tar.zst
             # Upload Docker Images to our VM
