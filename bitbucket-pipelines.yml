@@ -31,6 +31,25 @@ pipelines:
             download: false
             paths:
               - "*.tar.zst"
+          # Only Build on Changes in rest-api Directory
+          name: rest-api - Build
+          condition:
+            changesets:
+              includePaths:
+                - "rest-api/**"
+          script:
+            - apt update && apt install zstd -y
+            - IMAGE_NAME=rest-api
+            - docker-compose build ${IMAGE_NAME}
+            - docker save ${IMAGE_NAME} | zstd > "${IMAGE_NAME}.tar.zst"
+          services:
+            - docker
+          caches:
+            - docker
+          artifacts:
+            download: false
+            paths:
+              - "*.tar.zst"
       - step:
           name: Deploy to Production
           deployment: Production
@@ -52,4 +71,16 @@ pipelines:
                 SSH_USER: 'debian'
                 SERVER: '185.128.119.242'
                 COMMAND: '/home/debian/import-images.sh'
-            
+            # Copy Docker Compose File
+            - pipe: atlassian/sftp-deploy:0.5.8
+              variables:
+                USER: 'debian'
+                SERVER: '185.128.119.242'
+                REMOTE_PATH: '/home/debian/'
+                LOCAL_PATH: 'docker-compose.yaml'   
+            # Run Docker Compose
+            - pipe: atlassian/ssh-run:0.4.0
+              variables:
+                SSH_USER: 'debian'
+                SERVER: '185.128.119.242'
+                COMMAND: 'docker-compose up -d'         
