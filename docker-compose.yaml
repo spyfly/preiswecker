@@ -1,0 +1,7 @@
+version: "3.3"
+services:
+  crawler:
+    image: crawler:latest
+    build: crawler/
+    ports:
+      - "3000:3000"

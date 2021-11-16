@@ -12,13 +12,16 @@ pipelines:
   branches:
     master:
       - step:
+          # Only Build on Changes in Crawler Directory
           name: crawler - Build
+          condition:
+            changesets:
+              includePaths:
+                - "crawler/**"
           script:
             - apt update && apt install zstd -y
             - IMAGE_NAME=crawler
-            - cd crawler
-            - docker build . --file Dockerfile --tag ${IMAGE_NAME}
-            - cd ..
+            - docker-compose build ${IMAGE_NAME}
             - docker save ${IMAGE_NAME} | zstd > "${IMAGE_NAME}.tar.zst"
           services:
             - docker
