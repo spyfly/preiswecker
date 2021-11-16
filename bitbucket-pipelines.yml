@@ -52,8 +52,7 @@ pipelines:
             paths:
               - "*.tar.zst"
       - step:
-          name: Deploy to Production
-          deployment: Production
+          name: Copy images to production
           script:
             # Only execute if we have artifacts to deploy
             - if [ $(find . -name "*.tar.zst" | wc -l) == 0 ]; then exit 0 ; fi
@@ -72,6 +71,9 @@ pipelines:
                 SSH_USER: 'debian'
                 SERVER: '185.128.119.242'
                 COMMAND: '/home/debian/import-images.sh'
+      - step:
+          name: Deploy to Production
+          deployment: Production
             # Copy Docker Compose File
             - pipe: atlassian/sftp-deploy:0.5.8
               variables:
