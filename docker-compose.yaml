@@ -5,3 +5,11 @@ services:
     build: crawler/
     ports:
       - "3000:3000"
+  rest-api:
+    image: rest-api:latest
+    build: rest-api/
+    environment:
+      DB_CONNECTION_STRING: ${DB_CONNECTION_STRING}
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - "8080:8080"
