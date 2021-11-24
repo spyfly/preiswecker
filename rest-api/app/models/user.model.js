@@ -5,7 +5,13 @@ const User = mongoose.model(
   new mongoose.Schema({
     username: String,
     email: String,
-    password: String
+    password: String,
+    priceAlerts: [{
+      name: String,
+      targetPrice: Number,
+      filterUrl: String,
+      updated: { type: Date, default: Date.now }
+    }]
   })
 );
 

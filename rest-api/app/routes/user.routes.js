@@ -1,4 +1,4 @@
-const { authJwt } = require("../middlewares");
+const { authJwt, verifyPriceAlertData } = require("../middlewares");
 const controller = require("../controllers/user.controller");
 
 module.exports = function(app) {
@@ -10,7 +10,8 @@ module.exports = function(app) {
     next();
   });
 
-  app.get("/api/test/all", controller.allAccess);
-
-  app.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
+  app.post("/api/user/pricealert", [
+    authJwt.verifyToken,
+    verifyPriceAlertData.validatePriceAlertCreation
+  ], controller.createPriceAlert);
 };
