@@ -3,5 +3,8 @@ module.exports = {
       {
         name: "User operations",
       },
+      {
+        name: "Price-alert operations"
+      }
     ],
   };

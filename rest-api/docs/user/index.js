@@ -1,5 +1,6 @@
 const signUp = require('./signUp');
 const signIn = require('./signIn');
+const priceAlert = require('./priceAlert');
 
 module.exports = {
     paths:{
@@ -8,6 +9,9 @@ module.exports = {
         },
         '/auth/signin':{
             ...signIn
+        },
+        '/user/pricealert':{
+            ...priceAlert
         },
     }
 }

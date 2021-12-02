@@ -84,6 +84,26 @@ module.exports = {
           },
         },
       },
+      PriceAlert: {
+        type: "object",
+        properties: {
+          name: {
+            type: "string",
+            description: "Name of the price alert.",
+            example: "Price alert for Nintendo Switch",
+          },
+          filterUrl: {
+            type: "string",
+            description: "Filter url of the price alert.",
+            example: "...",
+          },
+          targetPrice: {
+            type: "string",
+            description: "arget price of the price alert.",
+            example: "250,50€",
+          },
+        },
+      },
     },
   },
 };
