@@ -10,7 +10,7 @@ const User = mongoose.model(
       name: String,
       targetPrice: Number,
       filterUrl: String,
-      updated: { type: Date, default: Date.now }
+      created: { type: Date, default: Date.now }
     }]
   })
 );

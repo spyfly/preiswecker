@@ -14,4 +14,17 @@ module.exports = function(app) {
     authJwt.verifyToken,
     verifyPriceAlertData.validatePriceAlertCreation
   ], controller.createPriceAlert);
+  app.put("/api/user/pricealert/:id", [
+    authJwt.verifyToken,
+    verifyPriceAlertData.validatePriceAlertCreation
+  ], controller.updatePriceAlert);
+  app.get("/api/user/pricealert", [
+    authJwt.verifyToken
+  ], controller.getAllPriceAlerts);
+  app.get("/api/user/pricealert/:id", [
+    authJwt.verifyToken,
+  ], controller.getPriceAlert);
+  app.delete("/api/user/pricealert/:id", [
+    authJwt.verifyToken,
+  ], controller.deletePriceAlert);
 };

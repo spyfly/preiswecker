@@ -66,6 +66,7 @@ module.exports = {
     schemas: {
       User: {
         type: "object",
+        required: ["username", "email", "password"],
         properties: {
           username: {
             type: "string",
@@ -86,6 +87,7 @@ module.exports = {
       },
       PriceAlert: {
         type: "object",
+        required: ["name", "filterUrl", "targetPrice"],
         properties: {
           name: {
             type: "string",
@@ -99,7 +101,7 @@ module.exports = {
           },
           targetPrice: {
             type: "string",
-            description: "arget price of the price alert.",
+            description: "Target price of the price alert.",
             example: "250,50€",
           },
         },

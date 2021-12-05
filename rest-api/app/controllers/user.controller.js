@@ -6,15 +6,15 @@ var jwt = require("jsonwebtoken");
 
 exports.createPriceAlert = async (req, res) => {
   const userID = req.userId;
-  var queryUsername = User.findOne({ id: userID})
-  queryUsername.exec().then(user => {
-    if(user.priceAlerts !== undefined && user.priceAlerts !== null && user.priceAlerts.length > 0){
+  var queryUser = User.findOne({ id: userID })
+  queryUser.exec().then(user => {
+    if (user.priceAlerts !== undefined && user.priceAlerts !== null && user.priceAlerts.length > 0) {
       user.priceAlerts.push({
         name: req.body.name,
         targetPrice: req.body.targetPrice,
         filterUrl: req.body.filterUrl,
       });
-    }else{
+    } else {
       let priceAlerts = [{
         name: req.body.name,
         targetPrice: req.body.targetPrice,
@@ -27,5 +27,82 @@ exports.createPriceAlert = async (req, res) => {
     }).catch(err => {
       res.status(500).send({ msg: "Internal server error: " + err });
     });
+  });
+};
+
+exports.updatePriceAlert = async (req, res) => {
+  const userID = req.userId;
+  const priceAlertID = req.params.id;
+  User.findOneAndUpdate({ _id: userID, priceAlerts: { $elemMatch: { _id: priceAlertID } } },
+    {
+      $set: {
+        'priceAlerts.$.name': req.body.name,
+        'priceAlerts.$.targetPrice': req.body.targetPrice,
+        'priceAlerts.$.filterUrl': req.body.filterUrl,
+      }
+    }, (error, doc) => {
+      if (doc) {
+        res.status(200).send({ msg: "Price alert was updated successfully!" })
+        return;
+      } else {
+        res.status(404).send({ msg: "Price alert with given ID doesn't exist!" })
+        return;
+      }
+      if (error) {
+        res.status(500).send({ msg: "Internal server error: " + error });
+        return;
+      }
+      res.status(500).send({ msg: "Unknown error" });
+    });
+};
+
+exports.getAllPriceAlerts = async (req, res) => {
+  const userID = req.userId;
+  var queryUser = User.findOne({ id: userID })
+  queryUser.exec().then(user => {
+    if (user.priceAlerts !== undefined && user.priceAlerts !== null && user.priceAlerts.length > 0) {
+      res.status(200).send(user.priceAlerts);
+      return;
+    } else {
+      res.status(404).send({ msg: "No price alerts saved for this user!" });
+      return;
+    }
+  }).catch(err => {
+    res.status(500).send({ msg: "Internal server error: " + err });
+  });
+};
+
+exports.getPriceAlert = async (req, res) => {
+  const userID = req.userId;
+  const priceAlertID = req.params.id;
+  User.findOne({ id: userID }).select({ priceAlerts: { $elemMatch: { _id: priceAlertID } } }).exec(function(err, obj) {
+    if (obj) {
+      res.status(200).send(obj.priceAlerts[0]);
+      return;
+    } else {
+      res.status(404).send({ msg: "Price alert with given ID doesn't exist!"});
+      return;
+    }
+});
+};
+
+exports.deletePriceAlert = async (req, res) => {
+  const userID = req.userId;
+  const priceAlertID = req.params.id;
+  User.updateOne({ _id: userID }, { "$pull": { "priceAlerts": { "_id": priceAlertID } } }, function (err, obj) {
+    if (obj) {
+      if (obj.modifiedCount > 0) {
+        res.status(200).send({ msg: "Price alert was deleted successfully!" });
+        return;
+      } else {
+        res.status(404).send({ msg: "Price alert with given ID doesn't exist!" });
+        return;
+      }
+    }
+    if (err) {
+      res.status(404).send({ msg: "Price alert with given ID doesn't exist!" });
+      return;
+    }
+    res.status(500).send({ msg: "Unknown error" });
   });
 };

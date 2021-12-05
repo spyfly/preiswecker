@@ -1,17 +1,22 @@
 const signUp = require('./signUp');
 const signIn = require('./signIn');
-const priceAlert = require('./priceAlert');
+const priceAlerts = require('./priceAlerts');
+const singlePriceAlert = require('./singlePriceAlert');
 
 module.exports = {
-    paths:{
-        '/auth/signup':{
+    paths: {
+        '/auth/signup': {
             ...signUp
         },
-        '/auth/signin':{
+        '/auth/signin': {
             ...signIn
         },
-        '/user/pricealert':{
-            ...priceAlert
+        '/user/pricealert': {
+            ...priceAlerts
         },
+
+        '/user/pricealert/': {
+            ...singlePriceAlert
+        }
     }
 }
