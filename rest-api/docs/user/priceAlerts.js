@@ -1,9 +1,9 @@
 module.exports = {
     post: {
-        tags: ["Price-alert operations"],
+        tags: ["Price-alert client operations"],
         description: "Create new price alert",
         operationId: "createPriceAlert",
-        security:{
+        security: {
             BearerAuth: []
         },
         parameters: [],
@@ -70,49 +70,62 @@ module.exports = {
         },
     },
     get: {
-        tags: ["Price-alert operations"],
+        tags: ["Price-alert client operations"],
         description: "Get all price alerts from user",
         operationId: "getPriceAlerts",
-        security:{
+        security: {
             BearerAuth: []
         },
         parameters: [],
         responses: {
             200: {
-                description: "Price alert was updated successfully",
+                description: "All price alerts from the user",
                 content: {
                     "application/json": {
                         schema: {
-                            PriceAlert: {
-                                type: "object",
-                                properties: {
-                                  name: {
-                                    type: "string",
-                                    description: "Name of the price alert.",
-                                    example: "Price alert for Nintendo Switch",
-                                  },
-                                  filterUrl: {
-                                    type: "string",
-                                    description: "Filter url of the price alert.",
-                                    example: "...",
-                                  },
-                                  targetPrice: {
-                                    type: "string",
-                                    description: "Target price of the price alert.",
-                                    example: "250,50€",
-                                  },
-                                  id: {
-                                    type: "string",
-                                    description: "ID of the price alert.",
-                                    example: "...",
-                                  },
-                                  created: {
-                                    type: "string",
-                                    description: "Date of the price alert creation.",
-                                    example: "...",
-                                  }
-                                },
-                              },
+                            type: "array",
+                            items: 
+                                {
+                                    type: "object",
+                                    properties: {
+                                        name: {
+                                            type: "string",
+                                            description: "Name of the price alert.",
+                                            example: "Price alert for Nintendo Switch",
+                                        },
+                                        filterUrl: {
+                                            type: "string",
+                                            description: "Filter url of the price alert.",
+                                            example: "...",
+                                        },
+                                        targetPrice: {
+                                            type: "string",
+                                            description: "Target price of the price alert.",
+                                            example: "250,50€",
+                                        },
+                                        reachedPrice: {
+                                            type: "string",
+                                            description: "Lowest price of the filter, set when the price-alert is reached.",
+                                            example: "120,50",
+                                        },
+                                        reached: {
+                                            type: "boolean",
+                                            description: "Is the target price of the price alert reached?",
+                                            example: "false",
+                                        },
+                                        id: {
+                                            type: "string",
+                                            description: "ID of the price alert.",
+                                            example: "...",
+                                        },
+                                        created: {
+                                            type: "string",
+                                            description: "Date of the price alert creation.",
+                                            example: "...",
+                                        }
+                                    },
+                                }
+                            
                         },
                     },
                 },

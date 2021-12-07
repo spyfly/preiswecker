@@ -4,7 +4,6 @@ const db = require("../models");
 const User = db.user;
 
 verifyToken = (req, res, next) => {
-  console.log(req.headers);
   let token = req.headers["authorization"];
 
   if (!token) {
@@ -13,7 +12,6 @@ verifyToken = (req, res, next) => {
 
   if(token.includes("Bearer ")){
     token = token.split(" ")[1];
-    console.log(token);
     jwt.verify(token, config.secret, (err, decoded) => {
       if (err) {
         return res.status(401).send({ msg: "Unauthorized!" });

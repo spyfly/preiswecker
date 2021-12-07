@@ -4,9 +4,9 @@ const User = db.user;
 
 var jwt = require("jsonwebtoken");
 
-exports.createPriceAlert = async (req, res) => {
+exports.createPriceAlert = (req, res) => {
   const userID = req.userId;
-  var queryUser = User.findOne({ id: userID })
+  var queryUser = User.findOne({ _id: userID })
   queryUser.exec().then(user => {
     if (user.priceAlerts !== undefined && user.priceAlerts !== null && user.priceAlerts.length > 0) {
       user.priceAlerts.push({
@@ -30,7 +30,7 @@ exports.createPriceAlert = async (req, res) => {
   });
 };
 
-exports.updatePriceAlert = async (req, res) => {
+exports.updatePriceAlert = (req, res) => {
   const userID = req.userId;
   const priceAlertID = req.params.id;
   User.findOneAndUpdate({ _id: userID, priceAlerts: { $elemMatch: { _id: priceAlertID } } },
@@ -56,9 +56,9 @@ exports.updatePriceAlert = async (req, res) => {
     });
 };
 
-exports.getAllPriceAlerts = async (req, res) => {
+exports.getAllPriceAlerts = (req, res) => {
   const userID = req.userId;
-  var queryUser = User.findOne({ id: userID })
+  var queryUser = User.findOne({ _id: userID })
   queryUser.exec().then(user => {
     if (user.priceAlerts !== undefined && user.priceAlerts !== null && user.priceAlerts.length > 0) {
       res.status(200).send(user.priceAlerts);
@@ -72,10 +72,10 @@ exports.getAllPriceAlerts = async (req, res) => {
   });
 };
 
-exports.getPriceAlert = async (req, res) => {
+exports.getPriceAlert = (req, res) => {
   const userID = req.userId;
   const priceAlertID = req.params.id;
-  User.findOne({ id: userID }).select({ priceAlerts: { $elemMatch: { _id: priceAlertID } } }).exec(function(err, obj) {
+  User.findOne({ _id: userID }).select({ priceAlerts: { $elemMatch: { _id: priceAlertID } } }).exec(function(err, obj) {
     if (obj) {
       res.status(200).send(obj.priceAlerts[0]);
       return;
@@ -86,7 +86,7 @@ exports.getPriceAlert = async (req, res) => {
 });
 };
 
-exports.deletePriceAlert = async (req, res) => {
+exports.deletePriceAlert = (req, res) => {
   const userID = req.userId;
   const priceAlertID = req.params.id;
   User.updateOne({ _id: userID }, { "$pull": { "priceAlerts": { "_id": priceAlertID } } }, function (err, obj) {

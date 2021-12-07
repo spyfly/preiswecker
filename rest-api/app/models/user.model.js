@@ -8,7 +8,9 @@ const User = mongoose.model(
     password: String,
     priceAlerts: [{
       name: String,
+      reached: { type: Boolean, default: false },
       targetPrice: Number,
+      reachedPrice: { type: Number, default: 0 },
       filterUrl: String,
       created: { type: Date, default: Date.now }
     }]

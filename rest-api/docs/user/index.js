@@ -2,6 +2,8 @@ const signUp = require('./signUp');
 const signIn = require('./signIn');
 const priceAlerts = require('./priceAlerts');
 const singlePriceAlert = require('./singlePriceAlert');
+const backendCommunicationPriceAlerts = require('./backendCommunicationPriceAlerts')
+const backendCommunicationSinglePriceAlert = require('./backendCommunicationSinglePriceAlert')
 
 module.exports = {
     paths: {
@@ -17,6 +19,12 @@ module.exports = {
 
         '/user/pricealert/': {
             ...singlePriceAlert
-        }
+        },
+        '/pricealerts': {
+            ...backendCommunicationPriceAlerts
+        },
+        '/pricealerts/': {
+            ...backendCommunicationSinglePriceAlert
+        },
     }
 }

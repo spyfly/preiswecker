@@ -20,8 +20,6 @@ app.use(express.urlencoded({ extended: true }));
 
 const db = require("./app/models");
 
-console.log(process.env.DB_CONNECTION_STRING);
-
 db.mongoose
   .connect(process.env.DB_CONNECTION_STRING, {
     useNewUrlParser: true,
@@ -36,6 +34,7 @@ db.mongoose
   });
 
 require('./app/routes/user.routes')(app);
+require('./app/routes/pricealerts.routes')(app);
 require('./app/routes/auth.routes')(app);
 
 

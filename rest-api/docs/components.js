@@ -102,7 +102,7 @@ module.exports = {
           targetPrice: {
             type: "string",
             description: "Target price of the price alert.",
-            example: "250,50€",
+            example: "250,50",
           },
         },
       },

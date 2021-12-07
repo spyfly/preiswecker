@@ -1,6 +1,6 @@
 module.exports = {
     put: {
-        tags: ["Price-alert operations"],
+        tags: ["Price-alert client operations"],
         description: "Update existing price alert",
         operationId: "updatePriceAlert",
         security:{
@@ -88,7 +88,7 @@ module.exports = {
         },
     },
     get: {
-        tags: ["Price-alert operations"],
+        tags: ["Price-alert client operations"],
         description: "Get specific price alert",
         operationId: "getPriceAlert",
         security:{
@@ -109,7 +109,7 @@ module.exports = {
                 content: {
                     "application/json": {
                         schema: {
-                            PriceAlert: {
+                     
                                 type: "object",
                                 properties: {
                                   name: {
@@ -125,7 +125,17 @@ module.exports = {
                                   targetPrice: {
                                     type: "string",
                                     description: "Target price of the price alert.",
-                                    example: "250,50€",
+                                    example: "250,50",
+                                  },
+                                  reachedPrice: {
+                                    type: "string",
+                                    description: "Lowest price of the filter, set when the price-alert is reached.",
+                                    example: "120,50",
+                                  },
+                                  reached: {
+                                    type: "boolean",
+                                    description: "Is the target price of the price alert reached?",
+                                    example: "false",
                                   },
                                   id: {
                                     type: "string",
@@ -138,7 +148,7 @@ module.exports = {
                                     example: "...",
                                   }
                                 },
-                              },
+                           
                         },
                     },
                 },
@@ -186,7 +196,7 @@ module.exports = {
         },
     },
     delete: {
-        tags: ["Price-alert operations"],
+        tags: ["Price-alert client operations"],
         description: "De existing price alert",
         operationId: "updatePriceAlert",
         security:{

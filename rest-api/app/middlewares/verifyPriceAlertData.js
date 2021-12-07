@@ -95,12 +95,50 @@ const validatePriceAlertCreation = [
   },
 ];
 
+const validateReachedPriceRules = [
+  check('reachedPrice')
+    .trim()
+    .notEmpty()
+    .withMessage('No reached price given!')
+    .bail()
+    .isFloat({ min: 0, max: 999999 })
+    .withMessage('No float number in range between 0 and 999999 given!')
+    .bail()
+    .escape(),
+];
+
+const validateUserIDRules = [
+  check('userID')
+    .trim()
+    .notEmpty()
+    .withMessage('No userID given!')
+    .bail()
+    .isString()
+    .withMessage('No String given!')
+    .bail()
+    .escape(),
+];
+
+const validateSetReached = [
+  validateReachedPriceRules,
+  validateUserIDRules,
+  (req, res, next) => {
+    const errors = customValidationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
 const verifyUserData = {
   validatePriceAlertCreation,
 
   validateName,
   validateFilterUrl,
   validateTargetPrice,
+
+  validateSetReached,
 };
 
 module.exports = verifyUserData;
