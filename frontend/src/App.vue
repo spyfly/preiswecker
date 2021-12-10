@@ -12,12 +12,26 @@ export default {
   name: '',
   components:{
     Header
+  },
+  methods:{
+    cb(){
+      
+    }
   }
 }
 </script>
 <style>
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+html, body {
+  font-family: 'Roboto', sans-serif;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
+}
+#app {
+  font-family: 'Roboto', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
