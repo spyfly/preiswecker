@@ -8,4 +8,4 @@ Processes frontend requests and writes/reads data to/from a MongoDB database.
 
 ## Usage
 - Start it with `docker-compose up`
-- OpenAPI docs at: http://localhost:8080/api-docs/ (after running `npm run start`)
+- OpenAPI docs at: http://localhost:5000/api-docs/ (after running `npm run start`)
