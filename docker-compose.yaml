@@ -15,6 +15,10 @@ services:
       JWT_SECRET: ${JWT_SECRET}
     ports:
       - "5000:5000"
+  scheduler:
+    image: scheduler:latest
+    build: scheduler/
+    restart: always
   mongodb:
     image: mongo
     restart: always

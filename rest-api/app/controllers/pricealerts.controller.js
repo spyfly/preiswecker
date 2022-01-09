@@ -28,11 +28,12 @@ exports.setPriceAlertReached = (req, res) => {
     const priceAlertID = req.params.id;
     const reachedPrice = req.body.reachedPrice;
     const userID = req.body.userID;
+    const reached = req.body.reached;
 
     User.findOneAndUpdate({ _id: userID, priceAlerts: { $elemMatch: { _id: priceAlertID } } },
         {
           $set: {
-            'priceAlerts.$.reached': true,
+            'priceAlerts.$.reached': reached,
             'priceAlerts.$.reachedPrice': reachedPrice,
           }
         }, (error, doc) => {

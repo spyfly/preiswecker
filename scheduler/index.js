@@ -5,7 +5,7 @@ const bree = new Bree({
       {
         name: 'priceCheck',
         timeout: '1m',
-        interval: '5m'
+        interval: '1m'
         // this is unnecessary but shows you can pass a Number (ms)
         // interval: ms('5m')
       }

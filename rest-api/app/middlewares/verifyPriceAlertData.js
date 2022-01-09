@@ -45,7 +45,7 @@ const validateFilterUrlRules = [
     .isString()
     .withMessage('No String given!')
     .bail()
-    .escape(),
+    /* .escape(), */
 ];
 
 const validateFilterUrl = [
@@ -119,9 +119,21 @@ const validateUserIDRules = [
     .escape(),
 ];
 
+const validateSetReachedRules = [
+  check('reached')
+    .trim()
+    .notEmpty()
+    .withMessage('No reached status given!')
+    .isBoolean()
+    .withMessage('Must be a boolean true or false')
+    .bail()
+    .escape(),
+];
+
 const validateSetReached = [
   validateReachedPriceRules,
   validateUserIDRules,
+  validateSetReachedRules,
   (req, res, next) => {
     const errors = customValidationResult(req);
     if (!errors.isEmpty()) {

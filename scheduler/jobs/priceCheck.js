@@ -1,25 +1,38 @@
 const axios = require('axios');
-const querystring = require('querystring');
 
 (async () => {
-    axios.get('http://localhost:5000/pricealerts')
+    axios.get('rest-api://rest-api:5000/api/pricealerts')
         .then(function (responseApi) {
             if(responseApi.data !== undefined && responseApi.data !== null){
-                for(const user in response.data){
-                    for(const priceAlert in user.priceAlerts){
-                        axios.get('http://localhost:3000/fetch', querystring.stringify({ cat: '', xf: priceAlert.filterUrl }))
+                console.log(responseApi.data);
+                for(const user of responseApi.data.priceAlertsFromUsers){
+                    for(const priceAlert of user.priceAlerts){
+                        axios.get('crawler://crawler:3000/fetch' + priceAlert.filterUrl.replace("https://geizhals.de", "").replace("https://geizhals.at", "").replace("https://geizhals.eu", ""))
                         .then(function (responseCrawler) {
                             if(responseCrawler.data !== undefined && responseCrawler.data !== null){
-                                if(responseCrawler.data.price <= priceAlert.targetPrice){
-                                    axios.put(`http://localhost:5000/pricealerts/${priceAlert.id}`, {userID: user.userID, reachedPrice: responseCrawler.data.price })
-                                    .then(function (responseApi2) {
-                                        
-                                    })
-                                    .catch(function (error) {
-                                        // handle error
-                                        console.log(error);
-                                    })
+                                console.log(responseCrawler.data);
+                                let reached = false;
+                                let reachedPrice = 999999999999999;
+                                for(const offer of responseCrawler.data){
+                                    if(offer.price <= priceAlert.targetPrice){
+                                        reached = true;
+                                        if(reachedPrice >= offer.price){
+                                            reachedPrice = offer.price;
+                                        }
+                                    }
                                 }
+                                axios.put(`rest-api://rest-api:5000/api/pricealerts/${priceAlert._id}`, {userID: user.userID, reachedPrice: reachedPrice, reached: reached })
+                                .then(function (responseApi2) {
+                                    if(responseApi2.status === 200){
+                                        console.log(`Price alert with ID ${priceAlert._id} by user with ID ${user.userID} with the following price: ${reachedPrice} and the status ${reached} updated!.`);
+                                    }else{
+                                        console.log(responseApi2.data);
+                                    }
+                                })
+                                .catch(function (error) {
+                                    // handle error
+                                    console.log(error);
+                                })
                             }
                         })
                         .catch(function (error) {
