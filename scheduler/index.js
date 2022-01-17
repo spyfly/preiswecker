@@ -4,8 +4,8 @@ const bree = new Bree({
     jobs: [
       {
         name: 'priceCheck',
-        timeout: '1m',
-        interval: '1m'
+        timeout: '5m',
+        interval: '5m'
         // this is unnecessary but shows you can pass a Number (ms)
         // interval: ms('5m')
       }
