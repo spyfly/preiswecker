@@ -102,6 +102,13 @@ pipelines:
                 SERVER: '185.128.119.242'
                 REMOTE_PATH: '/home/debian/'
                 LOCAL_PATH: 'docker-compose.yaml'   
+            # Copy Reverse Proxy Config
+            - pipe: atlassian/sftp-deploy:0.5.8
+              variables:
+                USER: 'debian'
+                SERVER: '185.128.119.242'
+                REMOTE_PATH: '/home/debian/reverse-proxy/'
+                LOCAL_PATH: 'reverse-proxy/*'   
             # Run Docker Compose
             - pipe: atlassian/ssh-run:0.4.0
               variables:
