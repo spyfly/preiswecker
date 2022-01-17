@@ -34,6 +34,8 @@ services:
     image: nginx
     restart: always
     ports:
-      - "80:80"
+      - "443:443"
     volumes:
       - ./reverse-proxy/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./reverse-proxy/ssl.crt:/etc/ssl.crt:ro
+      - ./reverse-proxy/ssl.key:/etc/ssl.key:ro
