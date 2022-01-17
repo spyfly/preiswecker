@@ -5,7 +5,7 @@ module.exports = {
         description: "Local server", // name
       },
       {
-        url: "http://preiswecker.spyfly.xyz/api", // url
+        url: "https://preiswecker.spyfly.xyz/api", // url
         description: "Production", // name
       },
     ],
