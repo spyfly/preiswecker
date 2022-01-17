@@ -52,6 +52,26 @@ pipelines:
             paths:
               - "*.tar.zst"
       - step:
+          # Only Build on Changes in scheduler Directory
+          name: scheduler - Build
+          condition:
+            changesets:
+              includePaths:
+                - "scheduler/**"
+          script:
+            - apt update && apt install zstd -y
+            - IMAGE_NAME=scheduler
+            - docker-compose build ${IMAGE_NAME}
+            - docker save ${IMAGE_NAME} | zstd > "${IMAGE_NAME}.tar.zst"
+          services:
+            - docker
+          caches:
+            - docker
+          artifacts:
+            download: false
+            paths:
+              - "*.tar.zst"
+      - step:
           name: Copy images to production
           script:
             # Only execute if we have artifacts to deploy
