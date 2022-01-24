@@ -12,7 +12,7 @@ const nodemailer = require("nodemailer");
         },
       });
 
-    axios.get('http://rest-api:5000/api/pricealerts', {
+    axios.get('http://rest-api:5001/api/pricealerts', {
         validateStatus: function (status) {
             return status >= 200 && status < 500;
         },
@@ -44,7 +44,7 @@ const nodemailer = require("nodemailer");
                                             html: emailMessage, // html body
                                           });
                                     }
-                                    axios.put(`http://rest-api:5000/api/pricealerts/${priceAlert._id}`, { userID: user.user.id, reachedPrice: reachedPrice, reached: reached })
+                                    axios.put(`http://rest-api:5001/api/pricealerts/${priceAlert._id}`, { userID: user.user.id, reachedPrice: reachedPrice, reached: reached })
                                         .then(function (responseApi2) {
                                             if (responseApi2.status === 200) {
                                                 console.log(`Price alert with ID ${priceAlert._id} by user with ID ${user.user.id} with the following price: ${reachedPrice} and the status ${reached} updated!.`);

@@ -4,19 +4,23 @@ const cors = require("cors");
 const swaggerUi = require('swagger-ui-express');
 const docs = require('./docs');
 
+const schedulerApp = express();
 const app = express();
 
-var corsOptions = {
+/* var corsOptions = {
   origin: "http://localhost:5000"
-};
+}; */
 
 app.use(cors());
+schedulerApp.use(cors());
 
 // parse requests of content-type - application/json
 app.use(express.json());
+schedulerApp.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+schedulerApp.use(express.urlencoded({ extended: true }));
 
 const db = require("./app/models");
 
@@ -34,7 +38,7 @@ db.mongoose
   });
 
 require('./app/routes/user.routes')(app);
-require('./app/routes/pricealerts.routes')(app);
+require('./app/routes/pricealerts.routes')(schedulerApp);
 require('./app/routes/auth.routes')(app);
 
 
@@ -49,4 +53,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(docs));
 const PORT = process.env.API_PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
+});
+
+const PORT_SCHEDULER = process.env.API_PORT_SCHEDULER || 5001;
+schedulerApp.listen(PORT_SCHEDULER, () => {
+  console.log(`Server (for Scheduler) is running on port ${PORT}.`);
 });
