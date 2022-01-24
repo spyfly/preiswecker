@@ -4,7 +4,7 @@ const User = db.user;
 exports.getAllPriceAlerts = (req, res) => {
     let priceAlertsFromUsers = [];
 
-    User.find({}, 'priceAlerts _id', function(err, users){
+    User.find({}, 'priceAlerts _id email', function(err, users){
         if(err){
             res.status(500).send({ msg: "Internal server error: " + err });
         } else{
@@ -12,7 +12,7 @@ exports.getAllPriceAlerts = (req, res) => {
                 res.status(404).send({ msg: "No price alerts available." }); 
             }else{
                 users.forEach(function(user) {
-                    priceAlertsFromUsers.push({userID: user._id, priceAlerts: user.priceAlerts});
+                    priceAlertsFromUsers.push({user: {id: user._id, email: user.email}, priceAlerts: user.priceAlerts});
                 });
                 if(priceAlertsFromUsers === undefined || priceAlertsFromUsers === null || priceAlertsFromUsers.length < 1){
                     res.status(404).send({ msg: "No price alerts available." }); 
