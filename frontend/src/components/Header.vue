@@ -13,11 +13,7 @@
             <va-button v-if="isLoggedIn" @click="showAlarm =! showAlarm" class="headerBtns" icon="alarm"> + Preiswecker</va-button>
 
             <router-link v-if="isLoggedIn" to="/profile" class="profile">
-<<<<<<< HEAD
               <va-button class="headerBtns" icon="person">Deine Wecker</va-button>
-=======
-              <va-button class="headerBtns" icon="person">Profile</va-button>
->>>>>>> 9e543abec83e23b025cd6f6e8b3400bb28733b6d
             </router-link>
 
             <va-button  v-if="!isLoggedIn" outline class="headerBtns" @click="showLogin = !showLogin"> Login </va-button>
