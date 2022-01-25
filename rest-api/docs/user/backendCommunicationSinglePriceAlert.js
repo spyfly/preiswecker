@@ -17,7 +17,7 @@ module.exports = {
                 "application/x-www-form-urlencoded": {
                     schema: {
                         type: "object",
-                        required: ["userID", "reachedPrice"],
+                        required: ["userID", "reachedPrice", "reached"],
                         properties: {
                           userID: {
                             type: "string",
@@ -28,6 +28,11 @@ module.exports = {
                             type: "string",
                             description: "Reached price of the price alert.",
                             example: "120,50",
+                          },
+                          reached: {
+                            type: "boolean",
+                            description: "Reached status of the price alert.",
+                            example: "false",
                           },
                         },
                       },

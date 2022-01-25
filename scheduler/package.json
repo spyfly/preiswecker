@@ -1,0 +1,17 @@
+{
+  "name": "preiswecker-scheduler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "bree": "^7.1.0",
+    "nodemailer": "^6.7.2"
+  }
+}

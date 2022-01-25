@@ -15,10 +15,20 @@ module.exports = {
                             {
                                 type: "object",
                                 properties: {
-                                    userID: {
-                                        type: "string",
-                                        description: "ID of the user who price alerts in the array.",
-                                        example: "...",
+                                    user: {
+                                        type: "object",
+                                        properties: {
+                                            id: {
+                                                type: "string",
+                                                description: "ID of the user whos price alerts in the array.",
+                                                example: "...",
+                                            },
+                                            email: {
+                                                type: "string",
+                                                description: "Email of the user whos price alerts in the array.",
+                                                example: "...",
+                                            },
+                                        }
                                     },
                                     priceAlerts: {
                                         type: "array",

@@ -52,6 +52,46 @@ pipelines:
             paths:
               - "*.tar.zst"
       - step:
+          # Only Build on Changes in scheduler Directory
+          name: scheduler - Build
+          condition:
+            changesets:
+              includePaths:
+                - "scheduler/**"
+          script:
+            - apt update && apt install zstd -y
+            - IMAGE_NAME=scheduler
+            - docker-compose build ${IMAGE_NAME}
+            - docker save ${IMAGE_NAME} | zstd > "${IMAGE_NAME}.tar.zst"
+          services:
+            - docker
+          caches:
+            - docker
+          artifacts:
+            download: false
+            paths:
+              - "*.tar.zst"
+      - step:
+          # Only Build on Changes in scheduler Directory
+          name: frontend - Build
+          condition:
+            changesets:
+              includePaths:
+                - "frontend/**"
+          script:
+            - apt update && apt install zstd -y
+            - IMAGE_NAME=frontend
+            - docker-compose build ${IMAGE_NAME}
+            - docker save ${IMAGE_NAME} | zstd > "${IMAGE_NAME}.tar.zst"
+          services:
+            - docker
+          caches:
+            - docker
+          artifacts:
+            download: false
+            paths:
+              - "*.tar.zst"
+      - step:
           name: Copy images to production
           script:
             # Only execute if we have artifacts to deploy
@@ -82,6 +122,13 @@ pipelines:
                 SERVER: '185.128.119.242'
                 REMOTE_PATH: '/home/debian/'
                 LOCAL_PATH: 'docker-compose.yaml'   
+            # Copy Reverse Proxy Config
+            - pipe: atlassian/sftp-deploy:0.5.8
+              variables:
+                USER: 'debian'
+                SERVER: '185.128.119.242'
+                REMOTE_PATH: '/home/debian/reverse-proxy/'
+                LOCAL_PATH: 'reverse-proxy/*'   
             # Run Docker Compose
             - pipe: atlassian/ssh-run:0.4.0
               variables:

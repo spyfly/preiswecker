@@ -24,7 +24,7 @@ module.exports = function () {
         /* Transform Geizhals API Response */
         var itemsArray = [];
         for (const product of products) {
-            const best_offer = decodeURIComponent(product.best_deep_link.match(/&loc=[^&]*/)[0].replace("&loc=", ""));
+            const best_offer = decodeURIComponent(product.best_deep_link.match(/&loc=[^&]*/)[0].replace("&loc=", "").replace(/%([^\d].)/, "%25$1"));
             itemsArray.push({
                 product: product.product,
                 best_offer: best_offer,

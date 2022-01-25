@@ -13,7 +13,11 @@
             <va-button v-if="isLoggedIn" @click="showAlarm =! showAlarm" class="headerBtns" icon="alarm"> + Preiswecker</va-button>
 
             <router-link v-if="isLoggedIn" to="/profile" class="profile">
+<<<<<<< HEAD
               <va-button class="headerBtns" icon="person">Deine Wecker</va-button>
+=======
+              <va-button class="headerBtns" icon="person">Profile</va-button>
+>>>>>>> 9e543abec83e23b025cd6f6e8b3400bb28733b6d
             </router-link>
 
             <va-button  v-if="!isLoggedIn" outline class="headerBtns" @click="showLogin = !showLogin"> Login </va-button>
@@ -152,6 +156,7 @@ a {
 }
 .va-modal__inner{
   width: 500px !important;
+  
 }
 }
 
@@ -165,6 +170,10 @@ a {
 .headerBtns{
   margin-top: 10px !important;
 }
+}
+.va-modal__dialog, va-modal--mobile-fullscreen, .va-modal--size-large{
+  background-color: #868585 !important;
+  background-color: #3D3D3D !important;
 }
 .va-modal__dialog, va-modal--mobile-fullscreen, .va-modal--size-large{
   background-color: #868585 !important;
