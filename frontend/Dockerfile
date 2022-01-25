@@ -17,8 +17,8 @@ FROM build AS final
 COPY --from=build /frontend/dist /usr/share/dist
 
 RUN apk add nodejs npm
-RUN npm i serve
+RUN npm i -g serve
 
 ARG VUE_APP_API_URL
 
-CMD sh -cx "npx serve -s /usr/share/dist -l 8080"
+CMD sh -cx "serve -s /usr/share/dist -l 8080"
