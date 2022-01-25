@@ -45,6 +45,9 @@ const validateFilterUrlRules = [
     .isString()
     .withMessage('No String given!')
     .bail()
+    .matches(/^https:\/\/geizhals\.de\/\?cat=\S+$/)
+    .withMessage('No valid Geizhals category-URL given!')
+    .bail()
     /* .escape(), */
 ];
 
