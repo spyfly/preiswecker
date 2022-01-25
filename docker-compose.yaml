@@ -41,7 +41,8 @@ services:
       - ./reverse-proxy/ssl.key:/etc/ssl.key:ro
   frontend:
     image: frontend:latest
-    build: frontend/
+    build: 
+      context: frontend/
       args:
         VUE_APP_API_URL: "https://preiswecker.spyfly.xyz/api"
     restart: always
