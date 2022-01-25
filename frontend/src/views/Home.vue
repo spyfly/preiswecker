@@ -11,6 +11,7 @@
       </p>
 
         </div>
+
       <h2>
         Wie funktioniert das?
       </h2>
@@ -49,10 +50,13 @@ h1{
   font-size: 200%;
 }
 h2{
+  margin-top:25px;
   font-size: 150%;
 }
 p{
   margin: 0 0 10px 0;
+  font-size: 125%;
+  line-height: 1.5;
 }
 .container {
   margin: 0 auto;
@@ -66,6 +70,8 @@ p{
   margin-bottom: 50px;
   max-width: 500px;
   flex:1;
+  border-block: 1px solid #ccc;
+  padding: 20px;
 }
 ol {
   list-style-type: decimal;
@@ -73,9 +79,13 @@ ol {
   margin-top: 10px;
   margin-bottom: 10px;
   max-width: 500px;
+  line-height: 1.5;
 }
 li{
-  margin-bottom: 10px;
+  margin: 20px 20px;
+  line-height: 1.5;
+  font-size: 100%;
+
 }
 
 </style>

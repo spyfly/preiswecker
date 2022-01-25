@@ -26,7 +26,7 @@
       <va-button
       v-if="isMobile"
         class="closeBtn"
-        color="danger"
+        color="abort"
         @click="close()"
       >Close
       </va-button>
@@ -42,34 +42,33 @@
 <script>
 export default {
   name: 'Login',
-  props: ["isMobile"],
-  data() {
-    return {
-      identifier: 'x',
-      password: '',
-      errors: [],
-      emits: ["close"],
-    }
-  },
-  methods: {
-    close() {
-      this.$emit("close")
+    props: ["isMobile"],
+    data() {
+      return {
+        identifier: '',
+        password: '',
+        errors: [],
+        emits: ["close"],
+      }
     },
-    async login(){
-      await this.$store.dispatch('login', {
-        identifier: this.identifier,
-        password: this.password,
-      }).then((response) => {
-        this.errors = [];
-        if(response != true){
-          response.map((error) => {
-            this.errors.push(error.msg);
-          });
-        }
-        else this.$emit("close");
-      });
+    methods: {
+      close() {
+        this.$emit("close")
+      },
+      async login() {
+        await this.$store.dispatch('login', {
+          identifier: this.identifier,
+          password: this.password,
+        }).then((response) => {
+          this.errors = [];
+          if (response != true) {
+            response.map((error) => {
+              this.errors.push(error.msg);
+            });
+          } else this.$emit("close");
+        });
+      }
     }
-  }
 }
 </script>
 

@@ -16,10 +16,18 @@ function parseJwt (token) {
 const accessToken = localStorage.getItem('accessToken');
 
 // set initial state
-var state = accessToken
-    ? { loggedIn: true, accessToken, user: parseJwt(accessToken) }
-    : { loggedIn: false, accessToken}
+export var state = accessToken
+    ? {
+        loggedIn: true,
+        user: parseJwt(accessToken)
+    }
+    : {
+        loggedIn: false
+    }
     ;
+
+state.accessToken = accessToken;
+state.alerts = [];
 
 export default createStore({
     state,
@@ -27,25 +35,26 @@ export default createStore({
         setAccessToken(state, access_token) {
             state.access_token = access_token;
         },
-        loginSuccess(state) {
+        loginSuccess(state, accessToken) {
             state.loggedIn = true;
+            state.accessToken = accessToken;
         },
         loginFailure(state) {
             state.loggedIn = false;
+        },
+        setAlerts(state, alerts) {
+            state.alerts = alerts;
         }
     },
     actions: {
         async login({ commit }, { identifier, password }) {
             return auth.login(identifier, password).then(response => {
                 localStorage.setItem('accessToken', response.data.accessToken);
-                console.log(response.data);
-                commit('loginSuccess', accessToken);
+                commit('loginSuccess', response.data.accessToken);
                 return true;
             }).catch(error => {
-                console.log(error.response);
                 const errors = error.response.data.errors;
-                console.table(errors);
-                commit('loginFailure', accessToken);
+                commit('loginFailure');
                 return errors;
             });
         },
@@ -54,9 +63,7 @@ export default createStore({
             return auth.register(username, email, password).then(response => {
                 return true;
             }).catch(error => {
-                console.log(error.response);
                 const errors = error.response.data.errors;
-                console.table(errors);
                 return errors;
             });
         },
@@ -69,11 +76,37 @@ export default createStore({
             return user.createNewAlert(name, filterUrl, targetPrice, state.accessToken).then(response => {
                 return true;
             }).catch(error => {
-                console.log(error.response);
                 const errors = error.response.data.errors;
-                console.table(errors);
                 return errors;
             });
         },
-    },
+        async fetchAllAlerts({ commit }) {
+            return user.fetchAllAlerts(state.accessToken).then(response => {
+                console.log(response.data);
+                commit('setAlerts', response.data);
+                return response.data;
+            }).catch(error => {
+                const errors = error.response.data.errors;
+                return errors;
+            });
+        },
+        async deleteAlert({ commit }, id ) {
+            console.log(id);
+            return user.deleteAlert(id, state.accessToken).then(response => {
+                return true;
+            }).catch(error => {
+                const errors = error.response.data.errors;
+                return errors;
+            });
+        },
+        async editAlert({ commit }, { id, name, filterUrl, targetPrice }) {
+            console.log(id, name, filterUrl, targetPrice);
+            return user.editAlert(id, name, filterUrl, targetPrice, state.accessToken).then(response => {
+                return true;
+            }).catch(error => {
+                const errors = error.response.data.errors;
+                return errors;
+            });
+        },
+    }
 });

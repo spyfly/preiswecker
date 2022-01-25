@@ -23,6 +23,9 @@
         <li v-for="(error, idx) in errors" v-bind:key="idx">{{ error }}</li>
       </ul>
     </div>
+    <div class="result text-center" v-if="result">
+      <p>{{ result }}</p>
+    </div>
     <div class="btns text-center">
       <va-button
         class="registerBtn"
@@ -75,7 +78,14 @@ export default {
             this.errors.push(error.msg);
           });
         }
-        else this.$emit("close");
+        else{
+          this.result = "Account erstellt!";
+          //close after 2 seconds
+          setTimeout(() => {
+            this.$emit("close");
+          }, 2500);
+          
+          }
       });
     }
   }
@@ -122,6 +132,9 @@ export default {
 }
 .closeBtn{
   background-color:darkgreen;
+}
+.result{
+  color:rgb(255, 255, 255);
 }
 
 @media screen and (max-width: 560px) {
