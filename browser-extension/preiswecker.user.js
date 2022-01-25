@@ -15,7 +15,6 @@
     'use strict';
     /* Store Auth Token in extension (requires frontend support first) */
     const userToken = await GM.getValue("userToken", "");
-    console.log(userToken);
     if (window.location.host == "geizhals.de") {
         /* Preiswecker hinzufügen Button */
         let a = document.createElement("a");
@@ -110,7 +109,7 @@
         const loginInterval = setInterval(function () {
             const tokenDiv = document.querySelector("[data-token]");
             if (tokenDiv) {
-                console.log("LoginElement found!");
+                console.debug("Preiswecker: TokenElement found, updating Token!");
                 GM.setValue("userToken", tokenDiv.getAttribute("data-token"));
                 clearInterval(loginInterval);
             }
