@@ -47,4 +47,4 @@ services:
         VUE_APP_API_URL: "https://preiswecker.spyfly.xyz/api"
     restart: always
     ports:
-      - "80:8080"
+      - "8080:8080"
