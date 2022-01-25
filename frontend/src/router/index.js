@@ -1,7 +1,9 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Profile from '../views/Profile.vue'
+import {state} from "../store/store";
 
+console.log(state.loggedIn)
 
 const routes = [
   {
@@ -13,7 +15,13 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: Profile,
-
+    beforeEnter: (to, from, next) => {
+      if (state.loggedIn) {
+        next()
+      } else {
+        next('/')
+      }
+    }
   }
 ]
 

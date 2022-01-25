@@ -21,7 +21,7 @@
         />
 
     <div v-if="response" class="response">
-      {{response}}
+    <span class="respText">{{response}}</span>
     <div class="clockContainer">
         <div class="soundWave left">
             <div class="wave1"></div>
@@ -60,9 +60,18 @@
     </div>
     <div class="btns text-center">
       <va-button
+        v-if="isEdit"
+        class="registerBtn"
+        @click="sendEdit()"
+      >
+        Confirm
+      </va-button>
+      <va-button
+        v-else
         class="registerBtn"
         @click="create()"
-      >Create
+      >
+        Create
       </va-button>
       <va-button
       v-if="isMobile"
@@ -79,7 +88,11 @@
 <script>
 export default {
   name: 'NewAlarm',
-  props: ['isMobile'],
+  props: [
+    'isMobile',
+    'isEdit',
+    'oldAlarm',
+  ],
   data () {
     return {
       link: '',
@@ -87,6 +100,15 @@ export default {
       price: '',
       response: '',
       errors: [],
+    }
+  },
+  created(){
+    console.log(this.oldAlarm)
+    if(this.isEdit){
+      console.log(this.oldAlarm)
+      this.link = this.oldAlarm.filterUrl;
+      this.name = this.oldAlarm.name;
+      this.price = this.oldAlarm.targetPrice;
     }
   },
   methods: {
@@ -107,12 +129,32 @@ export default {
         }
         else{
           this.response = "Wecker erfolgreich erstellt!";
+          this.$store.dispatch('fetchAllAlerts');
           setTimeout(() => {
             this.$emit("close");
-          }, 3000);
+          }, 1000);
           }
       });
-    }
+    },
+    async sendEdit(){
+      await this.$store.dispatch('editAlert', {
+        targetPrice: this.price,
+        id: this.oldAlarm._id,
+        name: this.name,
+        filterUrl: this.link,
+      }).then((response) => {
+        this.errors = [];
+        if(response != true){
+          response.map((error) => {
+            this.errors.push(error.msg);
+          });
+        }
+        else{
+          this.response = "Wecker erfolgreich bearbeitet!";
+          this.$store.dispatch('fetchAllAlerts');
+          }
+      });
+    },
   }
 }
 </script>
@@ -131,6 +173,13 @@ export default {
 }
 .va-form{
 
+}
+.example{
+
+  color: white;
+  width:100%;
+  text-decoration: underline;
+  
 }
 .va-input{
   margin: 20px 0px;
@@ -159,8 +208,12 @@ export default {
   background-color:darkgreen;
 }
 .response{
-  color: green;
+  color: #A3D39C;
   margin: 20px 0px;
+}
+.respText {
+  color: #A3D39C;
+  margin-bottom: 20px;
 }
 @media screen and (max-width: 560px) {
 
@@ -177,6 +230,7 @@ export default {
   height: 150px;
   border: 1px solid transparent;
   transform: scale(0.7);
+  margin-top:20px;
 }
 
 .clockOut{
@@ -263,7 +317,7 @@ export default {
 }
 
 .clockBell{
-  border: 2px solid rgb(0, 0, 0);
+  border: 2px solid grey;
   width: 20px; 
   height: 10px;
   position: absolute;
@@ -280,7 +334,7 @@ export default {
 }
 
 .bellArm {
-  border-right: 2px solid #2a2a2a;
+  border-right: 2px solid grey;
   position: absolute;
   margin-left: auto; 
   margin-right: auto;
@@ -365,7 +419,7 @@ export default {
 .clockSecondNeedle{
   width: 50px;
   height: 2px;
-  background: grey;
+  background: #A3D39C;
   position: absolute;
   top: 50%;
   left: 10px;
@@ -378,7 +432,7 @@ export default {
 .clockMinuteNeedle{
   width: 40px;
   height: 2px;
-  background: grey;
+  background: #A3D39C;
   position: absolute;
   top: 50%;
   left: 20px;

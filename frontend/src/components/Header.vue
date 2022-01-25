@@ -1,17 +1,19 @@
 <template>
   <div>
-    <div id="nav">
+    <nav id="nav">
       <header>
         <nav class="navbar">
+          <router-link to="/">
           <div class="logo">
             <h1>Hardware-Wecker</h1>
           </div>
-          <div class="links">
+          </router-link>
+          <div class="flex ">
 
             <va-button v-if="isLoggedIn" @click="showAlarm =! showAlarm" class="headerBtns" icon="alarm"> + Preiswecker</va-button>
 
             <router-link v-if="isLoggedIn" to="/profile" class="profile">
-              <va-button  class="headerBtns" icon="person">Profile</va-button>
+              <va-button class="headerBtns" icon="person">Profile</va-button>
             </router-link>
 
             <va-button  v-if="!isLoggedIn" outline class="headerBtns" @click="showLogin = !showLogin"> Login </va-button>
@@ -21,9 +23,9 @@
 
             
 
-            <va-modal size="large" overlay: false v-model="showLogin" title="Login" hide-default-actions>
+            <va-modal size="large" v-model="showLogin" title="Login" hide-default-actions>
               <template v-slot:default>
-                <Login v-on:close="showLogin = false" :isMobile="isMobile"/>
+                <Login  v-on:close="showLogin = false" :isMobile="isMobile"/>
               </template>
             </va-modal>
 
@@ -42,7 +44,7 @@
           </div>
         </nav>
       </header>
-    </div>
+    </nav>
 
   </div>
 </template>
@@ -52,22 +54,24 @@ import Login from './Login.vue';
 import Register from './Register.vue';
 import NewAlarm from './NewAlarm.vue';
 
+
   export default {
     name: 'Header',
     mounted() { 
-      console.log(this.$refs)
+
     },
     data() {
       return {
         showLogin: false,
         showRegister: false,
-        showAlarm: true,
+        showAlarm: false,
       }
     },
     components: {
       Login,
       Register,
-      NewAlarm
+      NewAlarm,
+      
     },
     methods:{
       logout(){
@@ -85,7 +89,6 @@ import NewAlarm from './NewAlarm.vue';
         }
       },
     isLoggedIn(){
-      console.log(this.$store.state)
       return this.$store.state.loggedIn;
     }
     },
@@ -105,6 +108,7 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+  color:#ffffff;
 }
 
 .links {
@@ -116,11 +120,6 @@ a {
 }
 .headerBtns{
   width: 200px;
-  padding: 10px;
-  margin: 5px 0px !important;
-}
-a:hover {
-  color: #045E07
 }
 
 .navbar {
@@ -128,9 +127,11 @@ a:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #fff;
-  background-color: #d6d6d6;
+  background: transparent;
+
   padding: 25px;
+  /* border-radius: 2px;
+  box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75); */
 }
 
 /* Desktop */
@@ -151,6 +152,7 @@ a:hover {
 }
 .va-modal__inner{
   width: 500px !important;
+  
 }
 }
 
@@ -161,5 +163,9 @@ a:hover {
   display:flex;
   flex-direction: column;
 } 
+}
+.va-modal__dialog, va-modal--mobile-fullscreen, .va-modal--size-large{
+  background-color: #868585 !important;
+  background-color: #3D3D3D !important;
 }
 </style>
