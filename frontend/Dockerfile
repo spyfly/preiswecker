@@ -8,7 +8,6 @@ ARG VUE_APP_API_URL
 RUN npm i
 RUN npm run build
 
-
 FROM build AS final
 COPY --from=build /frontend/dist /usr/share/dist
 
