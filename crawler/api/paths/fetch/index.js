@@ -11,7 +11,7 @@ module.exports = function () {
         //Filter Query Params
         var filteredQuery = [];
         for (const [key, values] of Object.entries(query)) {
-            console.log(key + ":" + values + " | " + typeof values);
+            //console.log(key + ":" + values + " | " + typeof values);
             if (values.length > 0) {
                 if (typeof values == 'object') {
                     for (const value of values) {
@@ -24,7 +24,7 @@ module.exports = function () {
         }
 
         const apiQueryString = '?' + filteredQuery.join('&');
-        console.log(apiQueryString)
+        console.log("Query String: " + apiQueryString)
         const apiReq = await fetch("https://geizhals.de/api/gh0/categorylist/" + apiQueryString, {
             "credentials": "include",
             "headers": {
