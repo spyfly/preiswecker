@@ -22,7 +22,10 @@ async function fetchAllAlerts(accessToken) {
         {
             headers: {
                 Authorization: `Bearer ${accessToken}`
-            }
+            },
+            validateStatus: function (status) {
+                return status >= 200 && status < 500;
+            },
         }
     );
 }

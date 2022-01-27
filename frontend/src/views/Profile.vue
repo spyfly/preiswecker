@@ -58,12 +58,14 @@ export default {
   },
   async created() {
     this.alerts = await this.$store.dispatch('fetchAllAlerts');
+    if(this.alerts.msg) this.$store.commit('setAlerts', []);
   },
   methods:{
     async deleteAlert(id){
       await this.$store.dispatch('deleteAlert', id).then(async (resp) => {
         if(resp){
           this.alerts = await this.$store.dispatch('fetchAllAlerts');
+          if(this.alerts.msg) this.$store.commit('setAlerts', []);
         }
         else{
           console.log('Error');
