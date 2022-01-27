@@ -57,5 +57,5 @@ app.listen(PORT, () => {
 
 const PORT_SCHEDULER = process.env.API_PORT_SCHEDULER || 5001;
 schedulerApp.listen(PORT_SCHEDULER, () => {
-  console.log(`Server (for Scheduler) is running on port ${API_PORT_SCHEDULER}.`);
+  console.log(`Server (for Scheduler) is running on port ${PORT_SCHEDULER}.`);
 });
