@@ -6,8 +6,24 @@ module.exports = function () {
     async function GET(req, res, next) {
         const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
-        var query = req.query;
-        const apiQueryString = '?' + Object.keys(query).map(key => key + '=' + query[key]).join('&');
+        const query = req.query;
+
+        //Filter Query Params
+        var filteredQuery = [];
+        for (const [key, values] of Object.entries(query)) {
+            console.log(key + ":" + values + " | " + typeof values);
+            if (values.length > 0) {
+                if (typeof values == 'object') {
+                    for (const value of values) {
+                        filteredQuery.push(key + "=" + value)
+                    }
+                } else {
+                    filteredQuery.push(key + "=" + values)
+                }
+            }
+        }
+
+        const apiQueryString = '?' + filteredQuery.join('&');
         console.log(apiQueryString)
         const apiReq = await fetch("https://geizhals.de/api/gh0/categorylist/" + apiQueryString, {
             "credentials": "include",
@@ -19,22 +35,29 @@ module.exports = function () {
             "mode": "cors"
         });
         const apiRes = await apiReq.json();
-        const products = apiRes.response.products;
-
-        /* Transform Geizhals API Response */
-        var itemsArray = [];
-        for (const product of products) {
-            const best_offer = decodeURIComponent(product.best_deep_link.match(/&loc=[^&]*/)[0].replace("&loc=", "").replace(/%([^\d].)/, "%25$1"));
-            itemsArray.push({
-                product: product.product,
-                best_offer: best_offer,
-                link: "https://geizhals.de/" + product.id,
-                price: product.best_price,
-                ppu: product.ppu
+        if (apiRes.error) {
+            console.log("Crawling Error occured: " + apiRes.error)
+            res.status(500).json({
+                error: apiRes.error
             });
-        }
+        } else {
+            const products = apiRes.response.products;
+            console.log(products.length + " Products found!");
 
-        res.status(200).json(itemsArray);
+            /* Transform Geizhals API Response */
+            var itemsArray = [];
+            for (const product of products) {
+                const best_offer = decodeURIComponent(product.best_deep_link.match(/&loc=[^&]*/)[0].replace("&loc=", "").replace(/%([^\d].)/, "%25$1"));
+                itemsArray.push({
+                    product: product.product,
+                    best_offer: best_offer,
+                    link: "https://geizhals.de/" + product.id,
+                    price: product.best_price,
+                    ppu: product.ppu
+                });
+            }
+            res.status(200).json(itemsArray);
+        }
     }
 
     GET.apiDoc = {
