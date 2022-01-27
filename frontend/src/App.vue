@@ -10,7 +10,7 @@
 import Header from './components/Header.vue'
 
 export default {
-  name: '',
+  name: 'App',
   data() {
     return {
     }
@@ -19,6 +19,14 @@ export default {
     Header
   },
   methods:{
+    
+  },
+  created(){
+    /* TO - DO check if jwt expired */
+    if(!this.$store.state.loggedIn){
+      this.$store.dispatch('logout');
+      this.$router.push('/');
+    }
   },
   computed:{
     token(){
