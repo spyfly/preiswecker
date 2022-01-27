@@ -128,7 +128,14 @@ pipelines:
                 USER: 'debian'
                 SERVER: '185.128.119.242'
                 REMOTE_PATH: '/home/debian/reverse-proxy/'
-                LOCAL_PATH: 'reverse-proxy/*'   
+                LOCAL_PATH: 'reverse-proxy/*'
+            # Copy Browser Extension Files
+            - pipe: atlassian/sftp-deploy:0.5.8
+              variables:
+                USER: 'debian'
+                SERVER: '185.128.119.242'
+                REMOTE_PATH: '/home/debian/browser-extension/'
+                LOCAL_PATH: 'browser-extension/*'      
             # Run Docker Compose
             - pipe: atlassian/ssh-run:0.4.0
               variables:

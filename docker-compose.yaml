@@ -39,6 +39,7 @@ services:
       - ./reverse-proxy/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./reverse-proxy/ssl.crt:/etc/ssl.crt:ro
       - ./reverse-proxy/ssl.key:/etc/ssl.key:ro
+      - ./browser-extension/preiswecker.user.js:/var/www/static/preiswecker.user.js:ro
   frontend:
     image: frontend:latest
     build: 
