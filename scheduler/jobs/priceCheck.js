@@ -18,7 +18,7 @@ const nodemailer = require("nodemailer");
         },
     })
         .then(function (responseApi) {
-            if (responseApi.data !== undefined && responseApi.data !== null) {
+            if (responseApi.data && responseApi.data.priceAlertsFromUsers) {
                 for (const user of responseApi.data.priceAlertsFromUsers) {
                     for (const priceAlert of user.priceAlerts) {
                         axios.get('http://crawler:3000/fetch' + priceAlert.filterUrl.replace("https://geizhals.de", "").replace("https://geizhals.at", "").replace("https://geizhals.eu", ""))
@@ -65,6 +65,8 @@ const nodemailer = require("nodemailer");
                     }
                 }
 
+            } else {
+                console.log("No price alerts found!")
             }
         })
         .catch(function (error) {

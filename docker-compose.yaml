@@ -44,7 +44,7 @@ services:
     build: 
       context: frontend/
       args:
-        VUE_APP_API_URL: "https://preiswecker.spyfly.xyz/api"
+        VUE_APP_API_URL: "/api"
     restart: always
     ports:
       - "8080:8080"
