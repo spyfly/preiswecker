@@ -1,4 +1,4 @@
-# Inhaltsverzeichnes
+# Inhaltsverzeichnis
 - [Team](team.md)
 - [Vorgehensweite](vorgehensweise.md)
 - [Client-Anleitungen](client-anleitung.md)
