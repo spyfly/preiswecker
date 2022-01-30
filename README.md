@@ -1,9 +1,10 @@
 # Preiswecker
 
 ## Installation
-1. Install docker and docker-compose
-2. Run application with `docker-compose up`
-3. Visit https://localhost to get started
+1. Install `docker` and `docker-compose`
+2. Copy `.env.example` to `.env`
+3. Run application with `docker-compose up`
+4. Visit `https://localhost` to use the application
 
 ## Components
 The application is made up of the components listed below:
@@ -24,3 +25,6 @@ SSL-Termination and exposing the frontend and the public parts of the rest-api p
 The website, which can be accessed under https://preiswecker.spyfly.xyz
 ### Browser Extension
 Allows users to directly create price-alerts from the geizhals.de website.
+
+## Documentation
+For a more detailed documentation visit the `_docs` folder
