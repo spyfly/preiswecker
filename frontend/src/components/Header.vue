@@ -84,7 +84,6 @@ import NewAlarm from './NewAlarm.vue';
     },
     computed: {
       isMobile() {
-        console.log(window.innerWidth)
         if( window.innerWidth <= 768 ) {
             return true;
         }

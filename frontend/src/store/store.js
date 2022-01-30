@@ -59,7 +59,6 @@ export default createStore({
             });
         },
         async register({ commit }, { username, email, password }) {
-            console.log(username, email, password);
             return auth.register(username, email, password).then(response => {
                 return true;
             }).catch(error => {
@@ -72,7 +71,6 @@ export default createStore({
             commit('loginFailure', accessToken);
         },
         async newAlert({ commit }, { name, filterUrl, targetPrice }) {
-            console.log(name, filterUrl, targetPrice);
             return user.createNewAlert(name, filterUrl, targetPrice, state.accessToken).then(response => {
                 return true;
             }).catch(error => {
@@ -82,7 +80,6 @@ export default createStore({
         },
         async fetchAllAlerts({ commit }) {
             return user.fetchAllAlerts(state.accessToken).then(response => {
-                console.log(response.data);
                 commit('setAlerts', response.data);
                 return response.data;
             }).catch(error => {
@@ -91,7 +88,6 @@ export default createStore({
             });
         },
         async deleteAlert({ commit }, id ) {
-            console.log(id);
             return user.deleteAlert(id, state.accessToken).then(response => {
                 return true;
             }).catch(error => {
@@ -100,7 +96,6 @@ export default createStore({
             });
         },
         async editAlert({ commit }, { id, name, filterUrl, targetPrice }) {
-            console.log(id, name, filterUrl, targetPrice);
             return user.editAlert(id, name, filterUrl, targetPrice, state.accessToken).then(response => {
                 return true;
             }).catch(error => {

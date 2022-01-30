@@ -103,9 +103,7 @@ export default {
     }
   },
   created(){
-    console.log(this.oldAlarm)
     if(this.isEdit){
-      console.log(this.oldAlarm)
       this.link = this.oldAlarm.filterUrl;
       this.name = this.oldAlarm.name;
       this.price = this.oldAlarm.targetPrice;

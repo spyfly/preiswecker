@@ -1,19 +1,14 @@
 import axios from "axios";
 
 const api_url = process.env.VUE_APP_API_URL;
-console.log(api_url);
-console.log(process.env.VUE_APP_API_URL)
 
 async function login(identifier, password) {
-    console.log(api_url)
-    console.log(identifier, password);
     return axios.post(api_url+'/auth/signin', {
         identifier,
         password,
     });
 }
 async function register(username, email, password) {
-    console.log(username, email, password);
     return axios.post(api_url+'/auth/signup', {
         username, email, password
     });

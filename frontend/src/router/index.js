@@ -3,8 +3,6 @@ import Home from '../views/Home.vue'
 import Profile from '../views/Profile.vue'
 import {state} from "../store/store";
 
-console.log(state.loggedIn)
-
 const routes = [
   {
     path: '/',
