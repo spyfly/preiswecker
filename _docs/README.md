@@ -4,6 +4,8 @@
 - [Client-Anleitungen](client-anleitung.md)
 - [Feedback](feedback.md)
 
-## Schnittstellenbeschreibung
-- Siehe `../rest-api/README.md` (Swagger/OpenAPI Dokumentation)
-- Siehe `../crawler/README.md` (OpenAPI Dokumentation)
+## Schnittstellenbeschreibungen
+- [Rest-API](../rest-api/README.md) 
+  - Siehe `../rest-api/README.md` (Swagger/OpenAPI Dokumentation)
+- [Crawler](../crawler/README.md)
+  - Siehe `../crawler/README.md` (OpenAPI Dokumentation)

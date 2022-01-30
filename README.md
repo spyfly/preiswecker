@@ -27,4 +27,4 @@ The website, which can be accessed under https://preiswecker.spyfly.xyz
 Allows users to directly create price-alerts from the geizhals.de website.
 
 ## Documentation
-For a more detailed documentation visit the `_docs` folder
+For a more detailed documentation visit the [_docs](_docs/README.md) folder
