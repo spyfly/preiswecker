@@ -1,6 +1,6 @@
 # Inhaltsverzeichnis
 - [Team](team.md)
-- [Vorgehensweite](vorgehensweise.md)
+- [Vorgehensweise](vorgehensweise.md)
 - [Client-Anleitungen](client-anleitung.md)
 - [Feedback](feedback.md)
 
