@@ -27,7 +27,7 @@ jobs:
 
       # Build images via BuildKit
       - name: Build Docker images
-        run: docker-compose -f docker-compose-release.yaml build --parallel
+        run: docker-compose build --parallel
         env:
           COMPOSE_DOCKER_CLI_BUILD: 1
           DOCKER_BUILDKIT: 1
