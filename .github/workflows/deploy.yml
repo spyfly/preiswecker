@@ -31,6 +31,10 @@ jobs:
         env:
           COMPOSE_DOCKER_CLI_BUILD: 1
           DOCKER_BUILDKIT: 1
+          
+      # Copy .env file
+      - name: Deploy via Docker-Compose
+        run: cp .env.example .env
 
       # Deploys via Docker Compose
       - name: Deploy via Docker-Compose
